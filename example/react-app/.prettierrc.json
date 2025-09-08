@@ -1,4 +1,4 @@
-export default{
+{
   "arrowParens": "always",
   "bracketSameLine": false,
   "bracketSpacing": true,
@@ -18,10 +18,3 @@ export default{
   "useTabs": true,
   "vueIndentScriptAndStyle": false
 }
-
-//   {
-//     printWidth: 80,
-//     singleQuote: true,
-//     trailingComma: 'es5',
-//     arrowParens: 'always',
-// }

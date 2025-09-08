@@ -1,0 +1,138 @@
+.HomeView {
+	color: #fff;
+	width: 100%;
+	height: 100%;
+
+	padding: 15px;
+	box-sizing: border-box;
+
+	background: url(../../assets/img/bg.png) no-repeat;
+	background-size: cover;
+	background-position: center;
+
+	.tableCom {
+
+		/* .ant-table-thead:{'#204098'}; */
+		.ant-table-thead {
+			background-color: #204098 !important;
+
+			.ant-table-cell,
+			.ant-table-cell-ellipsis {
+				background-color: #204098 !important;
+				color: #fff !important;
+			}
+		}
+
+		.ant-table-tbody {
+			background: #213267;
+			color: #fff;
+		}
+	}
+
+	.title {
+		.title_bg {
+			position: absolute;
+			left: 20%;
+			height: 90px;
+		}
+
+		.title_txt {
+			position: absolute;
+			text-align: center;
+			font-weight: bold;
+			width: 100%;
+			/* left:3%; */
+			margin-top: 10px;
+			background-image: linear-gradient(to top, #037cb1, #3dcdf4);
+			-webkit-background-clip: text;
+			color: transparent;
+			font-size: 40px;
+			font-family: 微软雅黑, serif;
+		}
+	}
+
+	.btnArr {
+		position: absolute;
+		top: 110px;
+		left: 40%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.btn {
+			margin-left: 5px;
+			width: auto;
+			padding: 12px;
+			font-size: 18px;
+			box-sizing: border-box;
+			background: url(../../assets/img/btn.png) no-repeat;
+			background-size: 100% 100%;
+			cursor: pointer;
+		}
+	}
+
+	.leftBox,
+	.rightBox {
+		position: absolute;
+		top: 150px;
+		height: calc(100% - 150px);
+	}
+
+	.leftBox {
+		left: 20px;
+		z-index: 10;
+
+		.leftTop,
+		.leftBottom {
+			padding: 55px 38px 38px 38px;
+			box-sizing: border-box;
+		}
+
+		.leftBottom {
+			margin-top: 30px;
+		}
+
+		.Top1data {
+			width: 48%;
+			height: 150px;
+			margin-top: 10px;
+		}
+	}
+
+	.rightBox {
+		z-index: 10;
+		right: 20px;
+
+		.rightTop,
+		.rightBottom {
+			padding: 40px;
+			box-sizing: border-box;
+		}
+
+		.rightBottom {
+			margin-top: 30px;
+		}
+	}
+
+	.centerBox {
+		position: absolute;
+		top: 38%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 92%;
+		height: calc(100% - 180px);
+		margin-top: 190px;
+	}
+
+	footer {
+		display: none !important;
+	}
+}
+
+footer {
+	display: none !important;
+}

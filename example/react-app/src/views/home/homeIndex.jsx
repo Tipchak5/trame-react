@@ -18,14 +18,15 @@ function HomeIndex() {
 	const messageIdRef = useRef(0);
 	const pendingCallbacks = useRef(new Map());
 
-
 	// 简化的消息监听 - 只处理必要的消息
 	useEffect(() => {
 		const handleMessage = (event) => {
 			// 基本的来源检查
-			if (!event.origin.includes('localhost') &&
+			if (
 				!event.origin.includes('localhost') &&
-				!event.origin.includes('localhost')) {
+				!event.origin.includes('localhost') &&
+				!event.origin.includes('localhost')
+			) {
 				return;
 			}
 
@@ -33,7 +34,6 @@ function HomeIndex() {
 			if (!event.data || typeof event.data !== 'object') {
 				return;
 			}
-
 			const { messageId, type, data, error } = event.data;
 
 			// 处理VTK就绪通知
@@ -79,11 +79,14 @@ function HomeIndex() {
 
 			// 发送消息
 			try {
-				iframeRef.current.contentWindow.postMessage({
-					messageId,
-					action,
-					data
-				}, '*');
+				iframeRef.current.contentWindow.postMessage(
+					{
+						messageId,
+						action,
+						data,
+					},
+					'*'
+				);
 			} catch (e) {
 				pendingCallbacks.current.delete(messageId);
 				reject(new Error('发送失败: ' + e.message));
@@ -107,14 +110,14 @@ function HomeIndex() {
 			return await sendToVTK('upload-file', {
 				name: file.name,
 				data: Array.from(new Uint8Array(arrayBuffer)),
-				type: file.type || 'application/octet-stream'
+				type: file.type || 'application/octet-stream',
 			});
 		},
 
 		getSimulationData: () => sendToVTK('get-simulation-data', {}),
 		resetView: () => sendToVTK('reset-view', {}),
 		clearHighlights: () => sendToVTK('clear-highlights', {}),
-		getStatus: () => sendToVTK('get-status', {})
+		getStatus: () => sendToVTK('get-status', {}),
 	};
 
 	// iframe加载完成
@@ -122,7 +125,6 @@ function HomeIndex() {
 		console.log('iframe已加载，等待VTK就绪...');
 		// 不做任何主动检查，等待VTK主动发送就绪消息
 	};
-
 
 	// 文件上传
 	const handleFileUpload = async (event) => {
@@ -143,18 +145,21 @@ function HomeIndex() {
 
 			if (result && result.success) {
 				message.success({ content: '文件上传成功', key: 'upload' });
-
-				// 获取仿真数据
-				try {
-					const simData = await vtkAPI.getSimulationData();
-					console.log('仿真数据:', simData);
-				} catch (e) {
-					console.log('获取仿真数据失败:', e.message);
+				// 直接从result中获取仿真数据
+				if (result.simulationData && result.simulationData.success) {
+					const data = result.simulationData.data;
+					console.log('仿真数据:', data);
+					console.log('文件名:', data.fileName);
+					console.log('几何信息:', data.geometry);
+					console.log('数据数组:', data.simulationArrays);
+					console.log('当前显示:', data.activeArray);
+				} else {
+					console.log('该文件无仿真数据');
 				}
 			} else {
 				message.error({
 					content: `上传失败: ${result?.error || '未知错误'}`,
-					key: 'upload'
+					key: 'upload',
 				});
 			}
 		} catch (e) {
@@ -162,36 +167,6 @@ function HomeIndex() {
 		} finally {
 			setUploading(false);
 			event.target.value = '';
-		}
-	};
-
-
-	// 测试按钮
-	const handleResetView = async () => {
-		if (!apiReady) {
-			message.warning('VTK未就绪');
-			return;
-		}
-
-		try {
-			await vtkAPI.resetView();
-			message.success('视图已重置');
-		} catch (e) {
-			message.error('重置视图失败: ' + e.message);
-		}
-	};
-
-	const handleClearHighlights = async () => {
-		if (!apiReady) {
-			message.warning('VTK未就绪');
-			return;
-		}
-
-		try {
-			await vtkAPI.clearHighlights();
-			message.success('高亮已清除');
-		} catch (e) {
-			message.error('清除高亮失败: ' + e.message);
 		}
 	};
 
@@ -204,20 +179,24 @@ function HomeIndex() {
 
 			{/* 按钮操作 */}
 			<div className='btnArr'>
-				<div className='btn' onClick={handleResetView}>
-					重置视图
-				</div>
-				<div className='btn' onClick={handleClearHighlights}>
-					清除高亮
-				</div>
 				<div className='btn'>
-					<label htmlFor="fileInput" style={{ cursor: 'pointer', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+					<label
+						htmlFor='fileInput'
+						style={{
+							cursor: 'pointer',
+							width: '100%',
+							height: '100%',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}
+					>
 						上传VTK文件 {uploading && '(上传中...)'}
 					</label>
 					<input
-						type="file"
-						id="fileInput"
-						accept=".vtk,.vtp,.vtu"
+						type='file'
+						id='fileInput'
+						accept='.vtk,.vtp,.vtu'
 						style={{ display: 'none' }}
 						onChange={handleFileUpload}
 						disabled={!apiReady || uploading}
@@ -315,10 +294,10 @@ function HomeIndex() {
 			<div className='centerBox'>
 				<iframe
 					ref={iframeRef}
-					style={{ width: 880, height: 600 }}
+					style={{ width: 880, height: 800 }}
 					src={iframeSrc}
 					onLoad={handleIframeLoad}
-					title="VTK Viewer"
+					title='VTK Viewer'
 				></iframe>
 			</div>
 

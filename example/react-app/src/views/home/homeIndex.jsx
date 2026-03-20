@@ -22,15 +22,6 @@ function HomeIndex() {
 	useEffect(() => {
 		const handleMessage = (event) => {
 			// console.log(event, 'eee');
-			// 基本的来源检查
-			// if (
-			// 	!event.origin.includes('localhost') &&
-			// 	!event.origin.includes('localhost') &&
-			// 	!event.origin.includes('localhost')
-			// ) {
-			// 	return;
-			// }
-
 			// 忽略非对象消息
 			if (!event.data || typeof event.data !== 'object') {
 				return;

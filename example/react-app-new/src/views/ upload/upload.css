@@ -1,0 +1,72 @@
+.uploadBox {
+	color: #fff;
+	width: 100%;
+	height: 100%;
+
+	background: url(../../assets/img/bg.png) no-repeat;
+	background-size: cover;
+	background-position: center;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.ant-upload-list-item-name {
+		color: #fff;
+	}
+
+	.container {
+		background: rgba(210, 210, 211, 0.1);
+		border-radius: 5px;
+		box-shadow: 0 1.5px 0 0 rgba(0, 0, 0, 0.1);
+		width: 795px;
+		height: 360px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		.text {
+			font-family: 'museo-slab';
+			font-size: 40px;
+			text-align: center;
+			margin: 0;
+			font-family: 微软雅黑, serif;
+			text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+			opacity: 0.8; /* Adjust for blending effect */
+			transition: opacity 0.3s ease-in-out;
+		}
+
+		.upload-item {
+			color: #ffff;
+			padding: 25px 25px 0;
+			margin: 20px 20px 0;
+			border-radius: 3px;
+		}
+	}
+
+	.upload-button {
+		background-color: #037cb1;
+		border-color: #037cb1;
+		color: white;
+		font-size: 22px;
+		padding: 10px 20px;
+		box-shadow: 0 0 10px rgba(0, 118, 255, 0.5);
+		transition: all 0.3s ease;
+	}
+
+	.upload-button:hover {
+		background-color: #11d6e0;
+		border-color: #11d6e0;
+		box-shadow: 0 0 20px rgba(0, 118, 255, 0.7);
+	}
+
+	.upload-action {
+		margin-top: 20px;
+	}
+
+	.progress-bar {
+		margin-top: 20px;
+		width: 60%;
+	}
+}
